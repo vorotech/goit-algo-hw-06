@@ -1,9 +1,13 @@
 import random
+from collections import deque
 
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 from scipy.interpolate import interp1d
+
+from bfs import bfs_recursive
+from dfs import dfs_recursive
 
 
 # Функція для апроксимації кривої
@@ -115,6 +119,14 @@ plt.figure(figsize=(10, 7))
 nx.draw(G, pos=positions, with_labels=True, node_color='skyblue', node_size=500, font_size=10, font_color='black', edge_color=edge_colors, width=edge_weights)
 
 
+# Відображення кривих ліній для debug
+#plt.plot(red_line_x, red_line_y, 'r--', alpha=0.5)
+#plt.plot(blue_line_x, blue_line_y, 'b--', alpha=0.5)
+#plt.plot(green_line_x, green_line_y, 'g--', alpha=0.5)
+
+plt.show()
+
+
 # Аналіз основних характеристик
 num_nodes = G.number_of_nodes()
 num_edges = G.number_of_edges()
@@ -130,9 +142,14 @@ print(f"Ступінь центральності top10: {sorted(degree_centrali
 print(f"Близькість вузла top10: {sorted(closeness_centrality.items(), key=lambda x: x[1], reverse=True)[:10]}")
 print(f"Посередництво вузла top10: {sorted(betweenness_centrality.items(), key=lambda x: x[1], reverse=True)[:10]}")
 
-# Відображення кривих ліній для debug
-#plt.plot(red_line_x, red_line_y, 'r--', alpha=0.5)
-#plt.plot(blue_line_x, blue_line_y, 'b--', alpha=0.5)
-#plt.plot(green_line_x, green_line_y, 'g--', alpha=0.5)
 
-plt.show()
+# Представлення графа за допомогою списку суміжності
+adjacency_list = {node: list(G.neighbors(node)) for node in G.nodes()}
+
+print("Запуск рекурсивного алгоритму DFS")
+dfs_recursive(adjacency_list, '110')
+
+print("\n")
+
+print("Запуск рекурсивного алгоритму BFS")
+bfs_recursive(adjacency_list, deque(['110']))
