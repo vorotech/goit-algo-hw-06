@@ -8,6 +8,7 @@ from scipy.interpolate import interp1d
 
 from bfs import bfs_recursive
 from dfs import dfs_recursive
+from dijkstra import dijkstra
 
 
 # Функція для апроксимації кривої
@@ -153,3 +154,9 @@ print("\n")
 
 print("Запуск рекурсивного алгоритму BFS")
 bfs_recursive(adjacency_list, deque(['110']))
+
+
+# Представлення графа у вигляді словника
+graph = {node: {neighbor: G[node][neighbor]['weight'] for neighbor in G.neighbors(node)} for node in G.nodes()}
+print("Виклик функції для вершини 212")
+dijkstra(graph, '212')
